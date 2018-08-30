@@ -1,5 +1,10 @@
 package mahapps.blockworkcircuits;
 
+/*
+MainActivity - Establishes the android base of the Project
+ */
+
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;

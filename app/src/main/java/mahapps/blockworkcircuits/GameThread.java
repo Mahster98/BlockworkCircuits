@@ -5,10 +5,10 @@ import android.view.SurfaceHolder;
 
 /**
  * Created by xelah on 2018-08-30.
+ * Custom Thread class - extra Failsafes to prevent thread errors.
  */
 
 public class GameThread extends Thread {
-
 
     private final int MAX_FPS = 30;
     private SurfaceHolder surfaceHolder;
@@ -38,6 +38,7 @@ public class GameThread extends Thread {
             startTime = System.nanoTime();
             canvas = null;
 
+            //Main game loop
             try{
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder){
@@ -57,6 +58,7 @@ public class GameThread extends Thread {
             timeMillis = (System.nanoTime() - startTime)/1000000;
             waitTime = targetTime - timeMillis;
 
+            //Sleeps thread if needed
             try{
                 if (waitTime > 0) {
                     this.sleep(waitTime);

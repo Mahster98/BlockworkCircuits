@@ -10,10 +10,16 @@ import android.view.SurfaceView;
 
 /**
  * Created by xelah on 2018-08-30.
+ *
+ * Utilises the SurfaceView class of Android to add Touchscreen and Canvas functionality
+ *
  */
 
 public class PlayZone extends SurfaceView implements SurfaceHolder.Callback  {
 
+    /**
+     * Custom Thread to run game loop
+     */
     private GameThread thread;
 
 
@@ -22,7 +28,7 @@ public class PlayZone extends SurfaceView implements SurfaceHolder.Callback  {
 
         getHolder().addCallback(this);
 
-        setup(context);
+        setup();
 
         setFocusable(true);
         //Changes
@@ -54,6 +60,12 @@ public class PlayZone extends SurfaceView implements SurfaceHolder.Callback  {
         }
     }
 
+    /**
+     * Touchscreen event listener
+     *
+     * @param event Touch event
+     * @return true if screen has been touched
+     */
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
@@ -63,11 +75,17 @@ public class PlayZone extends SurfaceView implements SurfaceHolder.Callback  {
     }
 
 
-
+    /**
+     * Updates the game everytime it is called
+     */
     public void update(){
 
     }
 
+    /**
+     * Draws onto the Canvas
+     * @param canvas
+     */
     @Override
     public void draw(Canvas canvas) {
 
@@ -78,10 +96,12 @@ public class PlayZone extends SurfaceView implements SurfaceHolder.Callback  {
 
     }
 
+    /**
+     * Sets up the game
+     */
+    public void setup() {
 
-    public void setup(Context context) {
 
-        Constants.CURRENT_CONTEXT = context;
         Constants.ACTIVE_SCENE = 0;
 
         thread = new GameThread(getHolder(), this);
