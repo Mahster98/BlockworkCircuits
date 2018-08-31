@@ -8,10 +8,10 @@ import android.graphics.Rect;
 
 public class BoxBase {
 
-    Point location;
-    Paint fill, stroke;
-    Rect rect;
-    int size;
+    private Point location;
+    private Paint fill, stroke;
+    private Rect rect;
+    private int size;
 
     public BoxBase(int xPos, int yPos, Colour colour) {
 
@@ -28,7 +28,45 @@ public class BoxBase {
         rect = new Rect(xPos, yPos, xPos + size, yPos + size);
     }
 
+    public Point getLocation() {
+        return location;
+    }
 
+    public void setLocation(Point location) {
+        this.location = location;
+    }
+
+    public Paint getFill() {
+        return fill;
+    }
+
+    public void setFill(Paint fill) {
+        this.fill = fill;
+    }
+
+    public Paint getStroke() {
+        return stroke;
+    }
+
+    public void setStroke(Paint stroke) {
+        this.stroke = stroke;
+    }
+
+    public Rect getRect() {
+        return rect;
+    }
+
+    public void setRect(Rect rect) {
+        this.rect = rect;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
 
     public void display(Canvas canvas){
         canvas.drawRect(rect, fill);

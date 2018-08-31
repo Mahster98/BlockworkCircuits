@@ -3,7 +3,6 @@ package mahapps.blockworkcircuits.Objects;
 import android.graphics.Color;
 import android.view.MotionEvent;
 
-import java.util.ArrayList;
 
 /**
  * Acts as the grid background of the game. Each instance of GridBox is a node of a graph
@@ -105,112 +104,39 @@ public class GridBox extends BoxBase {
 
 
 
-        if(rect.contains(Math.round(event.getX()), Math.round(event.getY()))){
+        if(getRect().contains(Math.round(event.getX()), Math.round(event.getY()))){
 
             System.out.println("touch");
 
             if(upperGrid != null) {
-                upperGrid.fill.setColor(Color.BLUE);
+                upperGrid.getFill().setColor(Color.BLUE);
             }
             if(lowerGrid != null) {
-                lowerGrid.fill.setColor(Color.BLACK);
+                lowerGrid.getFill().setColor(Color.BLACK);
             }
             if(leftGrid != null) {
-                leftGrid.fill.setColor(Color.GRAY);
+                leftGrid.getFill().setColor(Color.GRAY);
             }
             if(rightGrid != null) {
-                rightGrid.fill.setColor(Color.GREEN);
+                rightGrid.getFill().setColor(Color.GREEN);
             }
             if(topLeftGrid != null) {
-                topLeftGrid.fill.setColor(Color.MAGENTA);
+                topLeftGrid.getFill().setColor(Color.MAGENTA);
             }
             if(topRightGrid != null) {
-                topRightGrid.fill.setColor(Color.CYAN);
+                topRightGrid.getFill().setColor(Color.CYAN);
             }
             if(botLeftGrid != null) {
-                botLeftGrid.fill.setColor(Color.RED);
+                botLeftGrid.getFill().setColor(Color.RED);
             }
             if(botRightGrid != null) {
-                botRightGrid.fill.setColor(Color.YELLOW);
+                botRightGrid.getFill().setColor(Color.YELLOW);
             }
 
-//
         }
 
     }
 
-public void setUpGrid(ArrayList<GridBox> grid, int startX, int startY, int width, int height){
-
-//        int horizontal = width/size;
-//        int vertical = height/size;
-
-        for(int xPos = startX; xPos < width + startX; xPos += size){
-            for (int yPos = startY; yPos < height + startY; yPos += size){
-
-                grid.add(new GridBox(xPos, yPos));
-
-            }
-        }
-
-
-        for(GridBox box : grid){
-            for (GridBox other : grid){
-
-                int left = box.rect.left;
-                int right = box.rect.right;
-                int top = box.rect.top;
-                int bottom = box.rect.bottom;
-                int otherLeft = other.rect.left;
-                int otherRight = other.rect.right;
-                int otherTop = other.rect.top;
-                int otherBottom = other.rect.bottom;
-
-                //Check left
-                if (otherRight == left){
-
-                    if(otherBottom == top){
-                        box.setTopLeftGrid(other);
-                    }
-
-                    else if (otherTop == bottom){
-                        box.setBotLeftGrid(other);
-                    }
-
-                    else {
-                        box.setLeftGrid(other);
-                    }
-
-                }
-
-                else if (otherLeft == right){
-
-                    if(otherBottom == top){
-                        box.setTopRightGrid(other);
-                    }
-
-                    else if (otherTop == bottom){
-                        box.setBotRightGrid(other);
-                    }
-
-                    else {
-                        box.setRightGrid(other);
-                    }
-                }
-
-                else if (otherBottom == top){
-                    box.setUpperGrid(other);
-                }
-
-                else if (otherTop == bottom) {
-                    box.setLowerGrid(other);
-                }
-
-                int set = top + bottom;
-            }
-
-        }
-
 
 }
 
-}

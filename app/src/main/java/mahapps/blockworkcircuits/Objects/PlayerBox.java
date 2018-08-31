@@ -27,8 +27,8 @@ public class PlayerBox extends BoxBase{
     public void update(){
         xPos += dx;
         yPos += dy;
-        location = new Point(xPos, yPos);
-        rect = new Rect(location.x, location.y, location.x  + size, location.y + size);
+        setLocation(new Point(xPos, yPos));
+        setRect(new Rect(getLocation().x, getLocation().y, getLocation().x  + getSize(), getLocation().y + getSize()));
 
     }
 
