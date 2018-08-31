@@ -11,11 +11,11 @@ public class BoxBase {
     private Point location;
     Paint fill, stroke;
     Rect rect;
-    private int size;
+    int size;
 
     public BoxBase(int xPos, int yPos, Colour colour) {
 
-        size = 100;
+        size = 150;
         location = new Point(xPos, yPos);
         fill = new Paint();
         fill.setColor(colour.getColour());
