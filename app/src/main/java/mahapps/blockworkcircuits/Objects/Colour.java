@@ -13,7 +13,7 @@ public class Colour {
     private int blue;
     private int green;
 
-    Colour(int r, int b, int g){
+    public Colour(int r, int b, int g){
         red = r;
         blue = b;
         green = g;

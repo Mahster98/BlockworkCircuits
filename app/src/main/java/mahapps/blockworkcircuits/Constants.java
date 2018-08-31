@@ -12,8 +12,6 @@ import android.graphics.Canvas;
 public class Constants {
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;
-
-
     public static int ACTIVE_SCENE;
     public static Canvas canvas;
 

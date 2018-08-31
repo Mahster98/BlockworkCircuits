@@ -21,6 +21,7 @@ public class PlayZone extends SurfaceView implements SurfaceHolder.Callback  {
      * Custom Thread to run game loop
      */
     private GameThread thread;
+    private TestZone test;
 
 
     public PlayZone(Context context) {
@@ -90,7 +91,7 @@ public class PlayZone extends SurfaceView implements SurfaceHolder.Callback  {
     public void draw(Canvas canvas) {
 
         super.draw(canvas);
-        canvas.drawRect(new Rect(), new Paint());
+        test.draw(canvas);
 
 
 
@@ -103,8 +104,8 @@ public class PlayZone extends SurfaceView implements SurfaceHolder.Callback  {
 
 
         Constants.ACTIVE_SCENE = 0;
-
         thread = new GameThread(getHolder(), this);
+        test = new TestZone();
 
 
     }
