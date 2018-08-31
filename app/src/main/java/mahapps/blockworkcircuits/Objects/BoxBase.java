@@ -8,7 +8,7 @@ import android.graphics.Rect;
 
 public class BoxBase {
 
-    private Point location;
+    Point location;
     Paint fill, stroke;
     Rect rect;
     int size;

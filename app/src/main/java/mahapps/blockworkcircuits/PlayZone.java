@@ -82,6 +82,7 @@ public class PlayZone extends SurfaceView implements SurfaceHolder.Callback  {
      */
     public void update(){
 
+        test.update();
     }
 
     /**
