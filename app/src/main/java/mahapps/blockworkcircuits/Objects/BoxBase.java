@@ -13,9 +13,9 @@ public class BoxBase {
     private Rect rect;
     private int size;
 
-    public BoxBase(int xPos, int yPos, Colour colour) {
+    public BoxBase(int xPos, int yPos, int size, Colour colour) {
 
-        size = 150;
+        this.size = size;
         location = new Point(xPos, yPos);
         fill = new Paint();
         fill.setColor(colour.getColour());

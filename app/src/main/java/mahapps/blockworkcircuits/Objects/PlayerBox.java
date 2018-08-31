@@ -14,8 +14,8 @@ public class PlayerBox extends BoxBase{
     int speed;
     boolean up, down, left, right;
 
-    public PlayerBox(int xPos, int yPos){
-        super(xPos, yPos, new Colour(0, 0, 0));
+    public PlayerBox(int xPos, int yPos, int size){
+        super(xPos, yPos, size, new Colour(0, 0, 0));
         this.xPos = xPos;
         this.yPos = yPos;
         dx = dy = 0;

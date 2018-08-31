@@ -18,6 +18,29 @@ public class GridBox extends BoxBase {
     private GridBox topRightGrid;
     private GridBox botLeftGrid;
     private GridBox botRightGrid;
+    private String spawnLabel;
+
+
+
+    public GridBox(int xPos, int yPos, int size){
+        super(xPos, yPos, size, new Colour(255, 255, 255));
+
+        upperGrid = null;
+        lowerGrid = null;
+        leftGrid = null;
+        rightGrid = null;
+        topLeftGrid = null;
+        topRightGrid = null;
+        botLeftGrid = null;
+        botRightGrid = null;
+        spawnLabel = null;
+
+    }
+
+    public GridBox(int xPos, int yPos, int size, String spawnLabel){
+        this(xPos,yPos,size);
+        this.spawnLabel = spawnLabel;
+    }
 
     public GridBox getUpperGrid() {
         return upperGrid;
@@ -83,30 +106,18 @@ public class GridBox extends BoxBase {
         this.botRightGrid = botRightGrid;
     }
 
-    public GridBox(int xPos, int yPos){
-        super(xPos, yPos, new Colour(255, 255, 255));
-
-        upperGrid = null;
-        lowerGrid = null;
-        leftGrid = null;
-        rightGrid = null;
-        topLeftGrid = null;
-        topRightGrid = null;
-        botLeftGrid = null;
-        botRightGrid = null;
-
-
-
-    }
-
-
     public void onTouchEvent(MotionEvent event){
 
 
 
         if(getRect().contains(Math.round(event.getX()), Math.round(event.getY()))){
 
-            System.out.println("touch");
+            if(!spawnLabel.equals(null)) {
+                System.out.println(spawnLabel);
+            }
+            else {
+                System.out.println("No Label");
+            }
 
             if(upperGrid != null) {
                 upperGrid.getFill().setColor(Color.BLUE);
