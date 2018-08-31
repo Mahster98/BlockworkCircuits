@@ -6,7 +6,6 @@ import android.graphics.Color;
 
 import mahapps.blockworkcircuits.Objects.*;
 
-//Comment 2
 
 public class TestZone {
 
