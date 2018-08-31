@@ -102,7 +102,7 @@ public class PlayZone extends SurfaceView implements SurfaceHolder.Callback  {
      */
     public void setup() {
 
-
+//Comment
         Constants.ACTIVE_SCENE = 0;
         thread = new GameThread(getHolder(), this);
         test = new TestZone();
