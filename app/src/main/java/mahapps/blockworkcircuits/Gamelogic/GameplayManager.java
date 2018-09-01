@@ -1,8 +1,11 @@
 package mahapps.blockworkcircuits.Gamelogic;
 
-import java.util.ArrayList;
+import android.graphics.Point;
 
-import mahapps.blockworkcircuits.Objects.GridBox;
+import java.util.ArrayList;
+import java.util.Random;
+
+import mahapps.blockworkcircuits.Objects.*;
 
 public class GameplayManager {
 
@@ -64,4 +67,66 @@ public class GameplayManager {
 
         }
     }
+
+    public PlayerBox spawnPlayer(ArrayList<GridBox> grid){
+
+        Point pos = null;
+
+        while(true){
+
+            int loc = generateRandomNumberInRange(0, grid.size());
+
+            GridBox gridBox = grid.get(loc);
+
+
+            if(gridBox.getSpawnLabel() == null) {
+                gridBox.setSpawnLabel("Player");
+                pos = new Point(gridBox.getLocation());
+                break;
+            }
+        }
+
+        if(pos == null){
+            System.err.println("Position has not been correctly calculated. ERR!");
+            return new PlayerBox(0,0, grid.get(0).getSize());
+        }
+
+
+        return new PlayerBox(pos.x, pos.y, grid.get(0).getSize());
+    }
+
+    public ArrayList<TerminalBox> spawnTerminals(ArrayList<GridBox> grid, int lower, int upper){
+
+        ArrayList<TerminalBox> terminals = new ArrayList<>();
+
+        int numSpawn = generateRandomNumberInRange(lower, upper);
+
+        for (int i = 0; i <= numSpawn; i++) {
+
+            while (true) {
+
+                int index = generateRandomNumberInRange(0, grid.size());
+                GridBox gridBox = grid.get(index);
+
+                if(gridBox.getSpawnLabel() == null){
+                    gridBox.setSpawnLabel("Terminal");
+                    terminals.add(new TerminalBox(gridBox.getLocation().x, gridBox.getLocation().y, gridBox.getSize()));
+                    break;
+                }
+
+            }
+
+        }
+        return terminals;
+    }
+
+
+
+    private int generateRandomNumberInRange(int min, int max) {
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
+    }
+
+
 }

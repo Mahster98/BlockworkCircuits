@@ -106,18 +106,29 @@ public class GridBox extends BoxBase {
         this.botRightGrid = botRightGrid;
     }
 
+    public String getSpawnLabel() {
+        return spawnLabel;
+    }
+
+    public void setSpawnLabel(String spawnLabel) {
+        this.spawnLabel = spawnLabel;
+    }
+
     public void onTouchEvent(MotionEvent event){
 
 
 
         if(getRect().contains(Math.round(event.getX()), Math.round(event.getY()))){
 
-            if(!spawnLabel.equals(null)) {
-                System.out.println(spawnLabel);
-            }
-            else {
+            try{
+                if(!spawnLabel.equals(null)) {
+                    System.out.println(spawnLabel);
+                }
+            }catch(NullPointerException e){
                 System.out.println("No Label");
             }
+
+
 
             if(upperGrid != null) {
                 upperGrid.getFill().setColor(Color.BLUE);
