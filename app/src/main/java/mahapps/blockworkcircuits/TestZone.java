@@ -43,38 +43,14 @@ public class TestZone {
         counter = 0;
     }
 
-//    public void update(){
-//
-//        counter++;
-//        if (counter > 300){
-//            counter = 0;
-//        }
-//
-//        if(counter >= 0 && counter < 60){
-//            playerBox.moveUp();
-//        }
-//
-//        if(counter >= 60 && counter < 120){
-//            playerBox.moveRight();
-//        }
-//
-//        if(counter >= 120 && counter < 180){
-//            playerBox.moveDown();
-//        }
-//
-//        if(counter >= 180 && counter < 240){
-//            playerBox.moveLeft();
-//        }
-//
-//        if(counter >= 240 && counter < 300){
-//            playerBox.stopMoving();
-//        }
-//
-//        System.out.println(counter);
-//
-//        playerBox.update();
-//
-//    }
+    public void update(){
+
+        playerBox.update();
+        for(GridBox i : grid){
+            i.update();
+        }
+
+    }
 
 
     public void onTouchEvent( MotionEvent event){

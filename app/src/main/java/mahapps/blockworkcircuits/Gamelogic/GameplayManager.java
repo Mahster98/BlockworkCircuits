@@ -81,6 +81,7 @@ public class GameplayManager {
 
             if(gridBox.getSpawnLabel() == null) {
                 gridBox.setSpawnLabel("Player");
+                gridBox.on();
                 pos = new Point(gridBox.getLocation());
                 break;
             }

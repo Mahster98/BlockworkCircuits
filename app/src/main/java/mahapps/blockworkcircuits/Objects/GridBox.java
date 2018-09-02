@@ -19,6 +19,7 @@ public class GridBox extends BoxBase {
     private GridBox botLeftGrid;
     private GridBox botRightGrid;
     private String spawnLabel;
+    private boolean on, availableMove;
 
 
 
@@ -34,6 +35,8 @@ public class GridBox extends BoxBase {
         botLeftGrid = null;
         botRightGrid = null;
         spawnLabel = null;
+        on = false;
+        availableMove = false;
 
     }
 
@@ -110,51 +113,97 @@ public class GridBox extends BoxBase {
         return spawnLabel;
     }
 
+    public boolean isAvailable(){
+        if(availableMove){
+            return true;
+        }
+        return false;
+    }
+
+    public void setAvailableMove(boolean availableMove) {
+        this.availableMove = availableMove;
+    }
+
     public void setSpawnLabel(String spawnLabel) {
         this.spawnLabel = spawnLabel;
     }
 
+    public boolean isOn() {
+        return on;
+    }
+
+    public void on() {
+        on = true;
+
+        if (leftGrid != null) {
+            leftGrid.setAvailableMove(true);
+        }
+        if (rightGrid != null) {
+            rightGrid.setAvailableMove(true);
+        }
+        if (upperGrid != null) {
+            upperGrid.setAvailableMove(true);
+        }
+        if (lowerGrid != null) {
+            lowerGrid.setAvailableMove(true);
+        }
+    }
+
+    public void off(){
+        on = false;
+        if (leftGrid != null) {
+            if(leftGrid.isAvailable() && !leftGrid.isOn()) {
+                leftGrid.setAvailableMove(false);
+            }
+        }
+        if (rightGrid != null) {
+            if(rightGrid.isAvailable()&& !rightGrid.isOn()) {
+                rightGrid.setAvailableMove(false);
+            }
+        }
+        if (upperGrid != null) {
+            if(upperGrid.isAvailable()&& !upperGrid.isOn()) {
+                upperGrid.setAvailableMove(false);
+            }
+        }
+        if (lowerGrid != null) {
+            if(lowerGrid.isAvailable() && !lowerGrid.isOn()) {
+                lowerGrid.setAvailableMove(false);
+            }
+        }
+    }
+
     public void onTouchEvent(MotionEvent event){
 
+        switch(event.getActionMasked()) {
 
+            case MotionEvent.ACTION_DOWN:
 
-        if(getRect().contains(Math.round(event.getX()), Math.round(event.getY()))){
-
-            try{
-                if(!spawnLabel.equals(null)) {
-                    System.out.println(spawnLabel);
+                if (availableMove) {
+                    if (getRect().contains(Math.round(event.getX()), Math.round(event.getY()))) {
+                        if (!on) {
+                            on();
+                        } else {
+                            off();
+                        }
+                    }
                 }
-            }catch(NullPointerException e){
-                System.out.println("No Label");
-            }
+                break;
 
+        }
 
+    }
 
-            if(upperGrid != null) {
-                upperGrid.getFill().setColor(Color.BLUE);
-            }
-            if(lowerGrid != null) {
-                lowerGrid.getFill().setColor(Color.BLACK);
-            }
-            if(leftGrid != null) {
-                leftGrid.getFill().setColor(Color.GRAY);
-            }
-            if(rightGrid != null) {
-                rightGrid.getFill().setColor(Color.GREEN);
-            }
-            if(topLeftGrid != null) {
-                topLeftGrid.getFill().setColor(Color.MAGENTA);
-            }
-            if(topRightGrid != null) {
-                topRightGrid.getFill().setColor(Color.CYAN);
-            }
-            if(botLeftGrid != null) {
-                botLeftGrid.getFill().setColor(Color.RED);
-            }
-            if(botRightGrid != null) {
-                botRightGrid.getFill().setColor(Color.YELLOW);
-            }
+    public void update(){
 
+        if(on){
+            getFill().setColor(Color.BLUE);
+        }
+        else if(availableMove){
+            getFill().setColor(Color.CYAN);
+        }
+        else{
+            getFill().setColor(Color.WHITE);
         }
 
     }
