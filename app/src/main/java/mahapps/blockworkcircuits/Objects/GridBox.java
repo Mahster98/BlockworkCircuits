@@ -3,6 +3,10 @@ package mahapps.blockworkcircuits.Objects;
 import android.graphics.Color;
 import android.view.MotionEvent;
 
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+
 
 /**
  * Acts as the grid background of the game. Each instance of GridBox is a node of a graph
@@ -10,33 +14,22 @@ import android.view.MotionEvent;
 
 public class GridBox extends BoxBase {
 
-    private GridBox upperGrid;
-    private GridBox lowerGrid;
-    private GridBox leftGrid;
-    private GridBox rightGrid;
-    private GridBox topLeftGrid;
-    private GridBox topRightGrid;
-    private GridBox botLeftGrid;
-    private GridBox botRightGrid;
+
+    private Hashtable <String, GridBox> adjacent;
     private String spawnLabel;
-    private boolean on, availableMove;
+    private boolean on, availableMove, visited;
 
 
 
     public GridBox(int xPos, int yPos, int size){
         super(xPos, yPos, size, new Colour(255, 255, 255));
 
-        upperGrid = null;
-        lowerGrid = null;
-        leftGrid = null;
-        rightGrid = null;
-        topLeftGrid = null;
-        topRightGrid = null;
-        botLeftGrid = null;
-        botRightGrid = null;
+        adjacent = new Hashtable<>();
+
         spawnLabel = null;
         on = false;
         availableMove = false;
+        visited = false;
 
     }
 
@@ -45,69 +38,6 @@ public class GridBox extends BoxBase {
         this.spawnLabel = spawnLabel;
     }
 
-    public GridBox getUpperGrid() {
-        return upperGrid;
-    }
-
-    public void setUpperGrid(GridBox upperGrid) {
-        this.upperGrid = upperGrid;
-    }
-
-    public GridBox getLowerGrid() {
-        return lowerGrid;
-    }
-
-    public void setLowerGrid(GridBox lowerGrid) {
-        this.lowerGrid = lowerGrid;
-    }
-
-    public GridBox getLeftGrid() {
-        return leftGrid;
-    }
-
-    public void setLeftGrid(GridBox leftGrid) {
-        this.leftGrid = leftGrid;
-    }
-
-    public GridBox getRightGrid() {
-        return rightGrid;
-    }
-
-    public void setRightGrid(GridBox rightGrid) {
-        this.rightGrid = rightGrid;
-    }
-
-    public GridBox getTopLeftGrid() {
-        return topLeftGrid;
-    }
-
-    public void setTopLeftGrid(GridBox topLeftGrid) {
-        this.topLeftGrid = topLeftGrid;
-    }
-
-    public GridBox getTopRightGrid() {
-        return topRightGrid;
-    }
-
-    public void setTopRightGrid(GridBox topRightGrid) {
-        this.topRightGrid = topRightGrid;
-    }
-
-    public GridBox getBotLeftGrid() {
-        return botLeftGrid;
-    }
-
-    public void setBotLeftGrid(GridBox botLeftGrid) {
-        this.botLeftGrid = botLeftGrid;
-    }
-
-    public GridBox getBotRightGrid() {
-        return botRightGrid;
-    }
-
-    public void setBotRightGrid(GridBox botRightGrid) {
-        this.botRightGrid = botRightGrid;
-    }
 
     public String getSpawnLabel() {
         return spawnLabel;
@@ -118,6 +48,10 @@ public class GridBox extends BoxBase {
             return true;
         }
         return false;
+    }
+
+    public void addAdjacent(String key, GridBox element){
+        adjacent.put(key, element);
     }
 
     public void setAvailableMove(boolean availableMove) {
@@ -132,45 +66,109 @@ public class GridBox extends BoxBase {
         return on;
     }
 
+    //Returns a string detailing where the other grid is relative to the current grid
+    public String getAdjacentKey(GridBox other) {
+
+
+        int left = getRect().left;
+        int right = getRect().right;
+        int top = getRect().top;
+        int bottom = getRect().bottom;
+        int otherLeft = other.getRect().left;
+        int otherRight = other.getRect().right;
+        int otherTop = other.getRect().top;
+        int otherBottom = other.getRect().bottom;
+
+        if (otherRight == left) {
+
+            if (otherBottom == top) {
+                return "Top Left";
+            } else if (otherTop == bottom) {
+                return "Bot Left";
+            } else if (top == otherTop && bottom == otherBottom) {
+                return "Left";
+            }
+
+        } else if (otherLeft == right) {
+
+            if (otherBottom == top) {
+                return "Top Right";
+            } else if (otherTop == bottom) {
+                return "Bot Right";
+            } else if (top == otherTop && bottom == otherBottom) {
+                return "Right";
+            }
+        } else if (right == otherRight && left == otherLeft) {
+
+            if (otherBottom == top) {
+                return "Top";
+            } else if (otherTop == bottom) {
+                return "Bot";
+            }
+        }
+
+        return null;
+    }
+
+
+
     public void on() {
         on = true;
 
-        if (leftGrid != null) {
-            leftGrid.setAvailableMove(true);
+        Iterator<String> it = adjacent.keySet().iterator();
+
+        while(it.hasNext()){
+
+           String key = it.next();
+
+            if(key.equals("Top") || key.equals("Left") || key.equals("Bot") || key.equals("Right")) {
+
+                GridBox other = adjacent.get(key);
+                other.setAvailableMove(true);
+
+            }
+
+
         }
-        if (rightGrid != null) {
-            rightGrid.setAvailableMove(true);
-        }
-        if (upperGrid != null) {
-            upperGrid.setAvailableMove(true);
-        }
-        if (lowerGrid != null) {
-            lowerGrid.setAvailableMove(true);
-        }
+
     }
 
     public void off(){
         on = false;
-        if (leftGrid != null) {
-            if(leftGrid.isAvailable() && !leftGrid.isOn()) {
-                leftGrid.setAvailableMove(false);
+
+        Iterator<String> it = adjacent.keySet().iterator();
+
+        while(it.hasNext()){
+
+            String key = it.next();
+
+            if(key.equals("Top") || key.equals("Left") || key.equals("Bot") || key.equals("Right")) {
+
+                GridBox other = adjacent.get(key);
+                if(other.isAvailable() && !other.isOn()) {
+                    other.setAvailableMove(false);
+                }
+
             }
+
+
         }
-        if (rightGrid != null) {
-            if(rightGrid.isAvailable()&& !rightGrid.isOn()) {
-                rightGrid.setAvailableMove(false);
-            }
-        }
-        if (upperGrid != null) {
-            if(upperGrid.isAvailable()&& !upperGrid.isOn()) {
-                upperGrid.setAvailableMove(false);
-            }
-        }
-        if (lowerGrid != null) {
-            if(lowerGrid.isAvailable() && !lowerGrid.isOn()) {
-                lowerGrid.setAvailableMove(false);
-            }
-        }
+
+    }
+
+    public void setVisited(boolean visited){
+        this.visited = visited;
+    }
+
+    public boolean isVisited(){
+        return visited;
+    }
+
+    public HashSet<GridBox> getPaths(){
+
+        HashSet<GridBox> paths = new HashSet<>();
+
+        return paths;
     }
 
     public void onTouchEvent(MotionEvent event){
@@ -188,6 +186,8 @@ public class GridBox extends BoxBase {
                         }
                     }
                 }
+
+
                 break;
 
         }

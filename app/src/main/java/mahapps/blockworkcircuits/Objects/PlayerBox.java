@@ -4,6 +4,8 @@ package mahapps.blockworkcircuits.Objects;
 import android.graphics.Point;
 import android.graphics.Rect;
 
+import java.util.HashSet;
+
 
 public class PlayerBox extends BoxBase{
 
@@ -13,6 +15,8 @@ public class PlayerBox extends BoxBase{
     int dy;
     int speed;
     boolean up, down, left, right;
+    GridBox nextGrid;
+
 
     public PlayerBox(int xPos, int yPos, int size){
         super(xPos, yPos, size, new Colour(0, 0, 0));
@@ -21,6 +25,7 @@ public class PlayerBox extends BoxBase{
         dx = dy = 0;
         speed = 5;
         up = down = left = right = false;
+        nextGrid = null;
     }
 
 
@@ -63,6 +68,12 @@ public class PlayerBox extends BoxBase{
 
     }
 
+//When location = gridBox location
+    public void assignDirection(GridBox grid) {
+//
+//        HashSet<GridBox> numOfPaths = grid.getPaths
+//
 
+    }
 
 }

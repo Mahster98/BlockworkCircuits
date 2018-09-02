@@ -25,47 +25,18 @@ public class GameplayManager {
         for (GridBox box : grid) {
             for (GridBox other : grid) {
 
-                int left = box.getRect().left;
-                int right = box.getRect().right;
-                int top = box.getRect().top;
-                int bottom = box.getRect().bottom;
-                int otherLeft = other.getRect().left;
-                int otherRight = other.getRect().right;
-                int otherTop = other.getRect().top;
-                int otherBottom = other.getRect().bottom;
 
-                if (otherRight == left) {
+                String key = box.getAdjacentKey(other);
 
-                    if (otherBottom == top) {
-                        box.setTopLeftGrid(other);
-                    } else if (otherTop == bottom) {
-                        box.setBotLeftGrid(other);
-                    } else if (top == otherTop && bottom == otherBottom) {
-                        box.setLeftGrid(other);
-                    }
+                if (key != null) {
+                    box.addAdjacent(key, other);
 
-                } else if (otherLeft == right) {
 
-                    if (otherBottom == top) {
-                        box.setTopRightGrid(other);
-                    } else if (otherTop == bottom) {
-                        box.setBotRightGrid(other);
-                    } else if (top == otherTop && bottom == otherBottom) {
-                        box.setRightGrid(other);
-                    }
                 }
-                else if(right == otherRight && left == otherLeft) {
-
-                    if (otherBottom == top) {
-                        box.setUpperGrid(other);
-                    } else if (otherTop == bottom) {
-                        box.setLowerGrid(other);
-                    }
-                }
-
             }
 
         }
+
     }
 
     public PlayerBox spawnPlayer(ArrayList<GridBox> grid){

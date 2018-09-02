@@ -35,9 +35,11 @@ public class TestZone {
         gm = new GameplayManager();
 
         gm.setUpGrid(grid, Constants.SCREEN_WIDTH/8, Constants.SCREEN_HEIGHT/8, size, 2*Constants.SCREEN_WIDTH/3, 2*Constants.SCREEN_HEIGHT/3);
-
+//        gm.setUpGrid(grid, size, size, size, size*3, size*3);
+        System.out.println("Starting player Spawn");
         playerBox = gm.spawnPlayer(grid);
-        terminals = gm.spawnTerminals(grid, 1, 6);
+        System.out.println("Finished player Spawn");
+//        terminals = gm.spawnTerminals(grid, 1, 6);
 //        terminalBox = new TerminalBox(200, 200, size);
 
         counter = 0;
@@ -45,7 +47,7 @@ public class TestZone {
 
     public void update(){
 
-        playerBox.update();
+//        playerBox.update();
         for(GridBox i : grid){
             i.update();
         }
@@ -70,9 +72,9 @@ public class TestZone {
         for(GridBox i: grid){
             i.display(canvas);
         }
-        for(TerminalBox i : terminals){
-            i.display(canvas);
-        }
+//        for(TerminalBox i : terminals){
+//            i.display(canvas);
+//        }
         playerBox.display(canvas);
     }
 }
