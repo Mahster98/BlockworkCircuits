@@ -6,6 +6,7 @@ import android.view.MotionEvent;
 
 
 import java.util.ArrayList;
+import java.util.Vector;
 
 import mahapps.blockworkcircuits.Gamelogic.GameplayManager;
 import mahapps.blockworkcircuits.Objects.*;
@@ -17,11 +18,11 @@ public class TestZone {
     private BoxBase box;
     private PlayerBox playerBox;
     private TerminalBox terminalBox;
-    private GridBox gridBox;
+    private Vector<PlayerBox> playerBoxes;
     private ArrayList<GridBox> grid;
     private ArrayList<TerminalBox> terminals;
     private GameplayManager gm;
-    int counter;
+
 
     TestZone(){
 
@@ -36,18 +37,21 @@ public class TestZone {
 
         gm.setUpGrid(grid, Constants.SCREEN_WIDTH/8, Constants.SCREEN_HEIGHT/8, size, 2*Constants.SCREEN_WIDTH/3, 2*Constants.SCREEN_HEIGHT/3);
 //        gm.setUpGrid(grid, size, size, size, size*3, size*3);
-        System.out.println("Starting player Spawn");
+
+        playerBoxes = new Vector<PlayerBox>();
         playerBox = gm.spawnPlayer(grid);
-        System.out.println("Finished player Spawn");
+        playerBoxes.add(playerBox);
+
+
 //        terminals = gm.spawnTerminals(grid, 1, 6);
 //        terminalBox = new TerminalBox(200, 200, size);
 
-        counter = 0;
     }
 
     public void update(){
 
-//        playerBox.update();
+
+        playerBox.update(playerBoxes);
         for(GridBox i : grid){
             i.update();
         }
@@ -57,9 +61,13 @@ public class TestZone {
 
     public void onTouchEvent( MotionEvent event){
 
+
         for(GridBox i : grid){
+
             i.onTouchEvent(event);
         }
+
+        playerBox.onTouchEvent(event);
     }
 
     public void draw(Canvas canvas){
@@ -76,5 +84,8 @@ public class TestZone {
 //            i.display(canvas);
 //        }
         playerBox.display(canvas);
+        for(PlayerBox i : playerBoxes){
+            i.display(canvas);
+        }
     }
 }

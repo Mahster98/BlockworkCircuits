@@ -167,6 +167,17 @@ public class GridBox extends BoxBase {
     public HashSet<GridBox> getPaths(){
 
         HashSet<GridBox> paths = new HashSet<>();
+        Iterator<String> it = adjacent.keySet().iterator();
+
+        while(it.hasNext()){
+            String key = it.next();
+
+            GridBox option = adjacent.get(key);
+            if (option.isOn() && !option.isVisited()){
+                paths.add(option);
+            }
+
+        }
 
         return paths;
     }

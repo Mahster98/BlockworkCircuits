@@ -42,12 +42,13 @@ public class GameplayManager {
     public PlayerBox spawnPlayer(ArrayList<GridBox> grid){
 
         Point pos = null;
+        GridBox gridBox;
 
         while(true){
 
             int loc = generateRandomNumberInRange(0, grid.size());
 
-            GridBox gridBox = grid.get(loc);
+            gridBox = grid.get(loc);
 
 
             if(gridBox.getSpawnLabel() == null) {
@@ -60,11 +61,11 @@ public class GameplayManager {
 
         if(pos == null){
             System.err.println("Position has not been correctly calculated. ERR!");
-            return new PlayerBox(0,0, grid.get(0).getSize());
+            return new PlayerBox(0,0, grid.get(0).getSize(), null);
         }
 
 
-        return new PlayerBox(pos.x, pos.y, grid.get(0).getSize());
+        return new PlayerBox(pos.x, pos.y, grid.get(0).getSize(), gridBox);
     }
 
     public ArrayList<TerminalBox> spawnTerminals(ArrayList<GridBox> grid, int lower, int upper){
